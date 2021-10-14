@@ -1,10 +1,13 @@
 package dev.lytran.recylerviewexample;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -33,13 +36,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configRecylerView() {
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         rcvBeer.setLayoutManager(manager);
-        DividerItemDecoration decoration = new DividerItemDecoration(this, manager.getOrientation());
-        rcvBeer.addItemDecoration(decoration);
+
+//        DividerItemDecoration decoration = new DividerItemDecoration(this, manager.getOrientation());
+        // Custom divider
+        DividerItemDecoration customDivider = new DividerItemDecoration(rcvBeer.getContext(), manager.getOrientation());
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.custom_divider);
+        customDivider.setDrawable(drawable);
+
+        rcvBeer.addItemDecoration(customDivider);
 
         rcvBeer.setHasFixedSize(true);
+
+        // Set animation
+        rcvBeer.setItemAnimator((new DefaultItemAnimator()));
     }
 
     private void initData() {
