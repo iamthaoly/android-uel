@@ -2,6 +2,7 @@ package dev.lytran.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,62 +10,44 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import dev.lytran.recylerviewexample.R;
 import dev.lytran.model.Beer;
 
-public class BeerAdapter extends BaseAdapter {
-    Activity context;
-    List<Beer> arrBeer;
-    int custom_item;
+public class BeerAdapter extends RecyclerView.Adapter {
 
-    public BeerAdapter(Activity context, int item_grid, List<Beer> arrBeer) {
-        this.context = context;
-        this.arrBeer = arrBeer;
-        this.custom_item = item_grid;
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
     }
 
     @Override
-    public int getCount() {
-        return arrBeer.size();
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
     }
 
     @Override
-    public Object getItem(int i) {
-        return arrBeer.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
+    public int getItemCount() {
         return 0;
     }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder viewHolder;
-        if (view == null) {
-            viewHolder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(custom_item, null);
-            viewHolder.imvBeer = view.findViewById(R.id.imvBeer);
-            viewHolder.txtName = view.findViewById(R.id.txtBeerName);
+    private class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView imvThumb;
+        TextView txtInfo;
 
-            view.setTag(viewHolder);
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            // Link views
+            imvThumb  = itemView.findViewById(R.id.imvBeer);
+            txtInfo = itemView.findViewById(R.id.txtBeerName);
         }
-        else {
-            viewHolder = (ViewHolder) view.getTag();
-        }
-
-        Beer b = arrBeer.get(i);
-        viewHolder.imvBeer.setImageResource(b.getProductThumb());
-        viewHolder.txtName.setText(b.getProductName());
-
-        return view;
-    }
-
-    private static class ViewHolder {
-        ImageView imvBeer;
-        TextView txtName;
     }
 }
