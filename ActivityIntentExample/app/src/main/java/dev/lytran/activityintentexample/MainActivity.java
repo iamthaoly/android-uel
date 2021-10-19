@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import dev.lytran.model.Product1;
+import dev.lytran.model.Product2;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,13 +52,35 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
                 // 1st way
-                intent.putExtra("Number", 9);
-                intent.putExtra("score", 8.9);
-                intent.putExtra("Yes", true);
-                intent.putExtra("text", "Heck?");
+//                intent.putExtra("Number", 9);
+//                intent.putExtra("score", 8.9);
+//                intent.putExtra("Yes", true);
+//                intent.putExtra("text", "Heck?");
+//
+//                Product1 p1 = new Product1(29, "Heineken", 19.5);
+//                intent.putExtra("productInfo", p1);
+//
+//                Product2 p2 = new Product2();
+//                p2.setProductCode(88);
+//                p2.setProductName("Tigur");
+//                p2.setProductPrice(15);
+//                intent.putExtra("product2", p2);
 
-                Product1 p = new Product1(29, "Heineken", 19.5);
-                intent.putExtra("productInfo", p);
+                // 2nd way - Bundle
+                Bundle bundle = new Bundle();
+                bundle.putInt("Number", 10);
+                bundle.putDouble("score", 5.4);
+                bundle.putBoolean("Yes", true);
+                bundle.putString("text", "Ohmm");
+
+                Product1 p3 = new Product1(71, "lion", 8);
+                Product2 p4 = new Product2();
+                p4.setProductCode(70);
+                p4.setProductName("Tankr");
+                p4.setProductPrice(21);
+
+                bundle.putParcelable("info", p4);
+                intent.putExtra("bundle", bundle);
                 startActivity(intent);
             }
         });
