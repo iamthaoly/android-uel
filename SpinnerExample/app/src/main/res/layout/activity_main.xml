@@ -19,7 +19,7 @@
         android:id="@+id/spProvinces"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:spinnerMode="dropdown"
+        android:spinnerMode="dialog"
         android:layout_margin="5dp"
         />
 

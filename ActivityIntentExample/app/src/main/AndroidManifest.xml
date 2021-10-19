@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ActivityIntentExample">
         <activity
+            android:name=".ReceiveActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity3"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

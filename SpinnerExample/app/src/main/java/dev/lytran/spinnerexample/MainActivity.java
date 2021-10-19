@@ -32,8 +32,12 @@ public class MainActivity extends AppCompatActivity {
         provinces = new ArrayList<>();
         provinces.add("TP. HCM");
         provinces.add("Ha Noi");
+        provinces.add("Da Nang");
+        provinces.add("Dong Nai");
+        provinces.add("Ca Mau");
 
-        adapter = new ArrayAdapter<>(MainActivity.this, R.layout.support_simple_spinner_dropdown_item, provinces);
+//        adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, provinces);
+        adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_checked, provinces);
         spProvince.setAdapter(adapter);
     }
 }

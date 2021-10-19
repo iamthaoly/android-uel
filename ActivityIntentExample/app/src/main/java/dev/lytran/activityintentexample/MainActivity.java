@@ -2,13 +2,107 @@ package dev.lytran.activityintentexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import dev.lytran.model.Product1;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button btnOpenActivity2, btnOpenDialog, btnSendData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i("Main", "onCreate!");
+
+        linkViews();
+        addEvents();
+    }
+
+
+    private void linkViews() {
+        btnOpenActivity2 = findViewById(R.id.btnOpenActivity2);
+        btnOpenDialog = findViewById(R.id.btnOpenDialog);
+        btnSendData = findViewById(R.id.btnSendData);
+    }
+
+    private void addEvents() {
+        btnOpenActivity2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Open Activity 2
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                startActivity(intent);
+            }
+        });
+        btnOpenDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MainActivity3.class);
+                startActivity(intent);
+            }
+        });
+        btnSendData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
+                // 1st way
+                intent.putExtra("Number", 9);
+                intent.putExtra("score", 8.9);
+                intent.putExtra("Yes", true);
+                intent.putExtra("text", "Heck?");
+
+                Product1 p = new Product1(29, "Heineken", 19.5);
+                intent.putExtra("productInfo", p);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("Main", "onStart!");
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("Main", "onResume!");
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("Main", "onPause!");
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("Main", "onStop!");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("Main", "onDestroy!");
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i("Main", "onRestart!");
+
     }
 }
