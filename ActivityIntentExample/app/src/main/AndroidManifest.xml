@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ActivityIntentExample">
         <activity
+            android:name=".ProcessActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReceiveActivity"
             android:exported="true" />
         <activity
