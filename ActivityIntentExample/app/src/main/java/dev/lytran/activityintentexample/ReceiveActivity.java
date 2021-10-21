@@ -28,6 +28,7 @@ public class ReceiveActivity extends AppCompatActivity {
     private void getData() {
         Intent intent = getIntent();
 
+        //2
         // 1st way
 //        int num = intent.getIntExtra("Number", 0);
 //        double score  = intent.getDoubleExtra("score", 0.0);
