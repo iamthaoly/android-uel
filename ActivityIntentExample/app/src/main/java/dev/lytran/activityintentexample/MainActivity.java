@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import dev.lytran.model.Product1;
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     EditText edtNumber, edtPhoneNumber;
     TextView txtResult;
 
+    ImageView imvPhoto;
+    Button btnOpenCamera;
 //    public static final int REQUEST_CODE = 1;
 
     ActivityResultLauncher<Intent> activityResultLauncher;
@@ -38,9 +43,17 @@ public class MainActivity extends AppCompatActivity {
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null){
-                txtResult.setText(String.valueOf(result.getData().getIntExtra("power", 0)));
-
+                int number = result.getData().getIntExtra("power", -1);
+                if (number != -1) {
+                    txtResult.setText(String.valueOf(result.getData().getIntExtra("power", 0)));
+                }
+                // get image from camera
+                Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+                if (bitmap != null) {
+                    imvPhoto.setImageBitmap(bitmap);
+                }
             }
+
         });
     }
 
@@ -56,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         edtPhoneNumber = findViewById(R.id.edtPhoneNumber);
         btnDial = findViewById(R.id.btnDial);
         btnCall = findViewById(R.id.btnCall);
+
+        btnOpenCamera = findViewById(R.id.btnOpenCamera);
+        imvPhoto = findViewById(R.id.imvPhoto);
     }
 
     private void addEvents() {
@@ -141,6 +157,13 @@ public class MainActivity extends AppCompatActivity {
                 Uri uri = Uri.parse("tel:" + edtPhoneNumber.getText().toString());
                 intent.setData(uri);
                 startActivity(intent);
+            }
+        });
+        btnOpenCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                activityResultLauncher.launch(intent);
             }
         });
     }
