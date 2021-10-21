@@ -1,5 +1,7 @@
 package dev.lytran.activityintentexample;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
     EditText edtNumber;
     TextView txtResult;
 
-    public static final int REQUEST_CODE = 1;
+//    public static final int REQUEST_CODE = 1;
+
+    ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
         linkViews();
         addEvents();
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null){
+                txtResult.setText(String.valueOf(result.getData().getIntExtra("power", 0)));
+
+            }
+        });
     }
 
 
@@ -103,18 +114,20 @@ public class MainActivity extends AppCompatActivity {
 
                 intent.putExtra("number", edtNumber.getText().toString());
                 // 1st way
-                startActivityForResult(intent, REQUEST_CODE);
+//                startActivityForResult(intent, REQUEST_CODE);
+                activityResultLauncher.launch(intent);
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            txtResult.setText(String.valueOf(data.getIntExtra("power", 0)));
-        }
-    }
+// 1st way
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+//            txtResult.setText(String.valueOf(data.getIntExtra("power", 0)));
+//        }
+//    }
 
     @Override
     protected void onStart() {
