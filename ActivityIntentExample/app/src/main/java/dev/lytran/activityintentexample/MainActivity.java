@@ -1,12 +1,16 @@
 package dev.lytran.activityintentexample;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import dev.lytran.model.Product1;
 import dev.lytran.model.Product2;
@@ -14,6 +18,10 @@ import dev.lytran.model.Product2;
 public class MainActivity extends AppCompatActivity {
 
     Button btnOpenActivity2, btnOpenDialog, btnSendData, btnSend;
+    EditText edtNumber;
+    TextView txtResult;
+
+    public static final int REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         btnOpenDialog = findViewById(R.id.btnOpenDialog);
         btnSendData = findViewById(R.id.btnSendData);
         btnSend = findViewById(R.id.btnSend);
+        edtNumber = findViewById(R.id.edtNumber);
+        txtResult = findViewById(R.id.txtResult);
     }
 
     private void addEvents() {
@@ -85,7 +95,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
+                // Attach data
 
+                intent.putExtra("number", edtNumber.getText().toString());
+                // 1st way
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            txtResult.setText(String.valueOf(data.getIntExtra("power", 0)));
+        }
     }
 
     @Override
