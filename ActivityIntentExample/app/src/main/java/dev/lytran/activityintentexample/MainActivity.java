@@ -13,7 +13,7 @@ import dev.lytran.model.Product2;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnOpenActivity2, btnOpenDialog, btnSendData;
+    Button btnOpenActivity2, btnOpenDialog, btnSendData, btnSend;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         btnOpenActivity2 = findViewById(R.id.btnOpenActivity2);
         btnOpenDialog = findViewById(R.id.btnOpenDialog);
         btnSendData = findViewById(R.id.btnSendData);
+        btnSend = findViewById(R.id.btnSend);
     }
 
     private void addEvents() {
