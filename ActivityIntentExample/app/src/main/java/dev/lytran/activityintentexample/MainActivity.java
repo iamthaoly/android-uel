@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,8 +20,8 @@ import dev.lytran.model.Product2;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnOpenActivity2, btnOpenDialog, btnSendData, btnSend;
-    EditText edtNumber;
+    Button btnOpenActivity2, btnOpenDialog, btnSendData, btnSend, btnCall, btnDial;
+    EditText edtNumber, edtPhoneNumber;
     TextView txtResult;
 
 //    public static final int REQUEST_CODE = 1;
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
         edtNumber = findViewById(R.id.edtNumber);
         txtResult = findViewById(R.id.txtResult);
+
+        edtPhoneNumber = findViewById(R.id.edtPhoneNumber);
+        btnDial = findViewById(R.id.btnDial);
+        btnCall = findViewById(R.id.btnCall);
     }
 
     private void addEvents() {
@@ -116,6 +121,26 @@ public class MainActivity extends AppCompatActivity {
                 // 1st way
 //                startActivityForResult(intent, REQUEST_CODE);
                 activityResultLauncher.launch(intent);
+
+            }
+        });
+        btnDial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri uri = Uri.parse("tel:" + edtPhoneNumber.getText().toString());
+                intent.setData(uri);
+                startActivity(intent);
+
+            }
+        });
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                Uri uri = Uri.parse("tel:" + edtPhoneNumber.getText().toString());
+                intent.setData(uri);
+                startActivity(intent);
             }
         });
     }
