@@ -1,3 +1,3 @@
 # android-uel
 
-Code cho môn Phát triển di động (Android) - 2021
+Code cho môn Phát triển th di động (Android) - 2021
