@@ -62,8 +62,11 @@ public class MainActivity2 extends AppCompatActivity {
             }
             else if (view.getId() == R.id.btnFrag2) {
                 fragment = new Fragment2();
+                Bundle bundle =  new Bundle();
+                bundle.putString("str", "abc123");
+                fragment.setArguments(bundle);
             }
-            transaction.add(R.id.layoutContainer, fragment);
+            transaction.replace(R.id.layoutContainer, fragment);
             transaction.commit();
         }
     };
