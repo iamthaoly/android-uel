@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#31D2E7"
+    android:gravity="center_vertical"
+    tools:context=".Fragment3">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fragment 4"
+
+        android:textColor="#F9F7F3"
+        android:textSize="36sp"
+        android:gravity="center"
+        />
+
+    <EditText
+        android:id="@+id/edtContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enterr"
+        android:textSize="30sp"
+        />
+
+    <Button
+        android:id="@+id/btnFrag4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clickkk"
+        android:backgroundTint="#000000"
+        android:layout_gravity="end"/>
+</LinearLayout>
