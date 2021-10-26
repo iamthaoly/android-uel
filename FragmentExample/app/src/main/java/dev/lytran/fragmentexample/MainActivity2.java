@@ -63,7 +63,7 @@ public class MainActivity2 extends AppCompatActivity {
             else if (view.getId() == R.id.btnFrag2) {
                 fragment = new Fragment2();
             }
-            transaction.add(R.id.layoutContainer, fragment)
+            transaction.add(R.id.layoutContainer, fragment);
             transaction.commit();
         }
     };
