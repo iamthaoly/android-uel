@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imvProductThumbnail"
+        android:layout_width="120dp"
+        android:layout_height="200dp"
+        android:src="@drawable/beer333"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_height="200dp">
+        <TextView
+            android:id="@+id/txtProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Helniken"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#009688"/>
+        <TextView
+            android:id="@+id/txtProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:layout_marginTop="15dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#FF9800"/>
+    </LinearLayout>
+
+</LinearLayout>
