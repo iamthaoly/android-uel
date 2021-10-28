@@ -4,11 +4,21 @@ public class Product {
     private String productName;
     private int productPrice;
     private int productThumbnail;
+    private String productSlogan;
 
-    public Product(String productName, int productPrice, int productThumbnail) {
+    public Product(String productName, int productPrice, int productThumbnail, String slogan) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productThumbnail = productThumbnail;
+        this.productSlogan = slogan;
+    }
+
+    public String getProductSlogan() {
+        return productSlogan;
+    }
+
+    public void setProductSlogan(String productSlogan) {
+        this.productSlogan = productSlogan;
     }
 
     public String getProductName() {

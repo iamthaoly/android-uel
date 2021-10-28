@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/layout/fragment_4.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_listview.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/product_fragment.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/product_info_fragment.xml" value="0.4" />
       </map>
     </option>
   </component>

@@ -6,7 +6,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-public class ProductActivity extends AppCompatActivity {
+import dev.lytran.model.MyItemClick;
+import dev.lytran.model.Product;
+
+public class ProductActivity extends AppCompatActivity implements MyItemClick {
 
     private FragmentManager manager;
 //    private FragmentTransaction transaction;
@@ -18,6 +21,16 @@ public class ProductActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.layoutContainer, new ProductFragment());
+        transaction.commit();
+    }
+
+    @Override
+    public void click(Product p) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        ProductInfoFragment infoFragment = new ProductInfoFragment();
+        transaction.replace(R.id.layoutContainer, infoFragment);
+        // de back ve fragment cu
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
