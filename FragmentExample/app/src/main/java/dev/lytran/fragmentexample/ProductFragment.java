@@ -25,6 +25,7 @@ public class ProductFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.product_fragment, container, false);
+        lvProduct = v.findViewById(R.id.lvProduct);
         adapter = new ProductAdapter(getContext(), R.layout.item_listview, initData());
         lvProduct.setAdapter(adapter);
         return v;
