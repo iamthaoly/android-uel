@@ -1,11 +1,13 @@
 package dev.lytran.fragmentexample;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import dev.lytran.model.Product;
 public class ProductFragment extends Fragment {
 
     ListView lvProduct ;
+    TextView txtName, txtPrice, txtSlogan;
     ArrayList<Product> products;
     ProductAdapter adapter;
 
@@ -30,23 +33,35 @@ public class ProductFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.product_fragment, container, false);
         lvProduct = v.findViewById(R.id.lvProduct);
+
+        txtName = v.findViewById(R.id.txtName);
+        txtPrice = v.findViewById(R.id.txtPrice);
+        txtSlogan = v.findViewById(R.id.txtSlogan);
+
         adapter = new ProductAdapter(getContext(), R.layout.item_listview, initData());
         lvProduct.setAdapter(adapter);
 
         lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                itemClick = new MyItemClick() {
-                    @Override
-                    public void click(Product p) {
-                        itemClick = (MyItemClick) getActivity();
-                        if (itemClick != null) {
-                            itemClick.click(products.get(i));
-                        }
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    itemClick = (MyItemClick) getActivity();
+                    if (itemClick != null) {
+                        itemClick.click(products.get(i));
                     }
-                };
+                }
+                else {
+                    txtName.setText(products.get(i).getProductName());
+                    txtPrice.setText(String.valueOf(products.get(i).getProductPrice()));
+                    txtSlogan.setText(products.get(i).getProductSlogan());
+                }
             }
         });
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            txtName.setText(products.get(0).getProductName());
+            txtPrice.setText(String.valueOf(products.get(0).getProductPrice()));
+            txtSlogan.setText(products.get(0).getProductSlogan());
+        }
         return v;
     }
 
