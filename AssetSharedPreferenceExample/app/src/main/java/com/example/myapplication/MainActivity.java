@@ -3,8 +3,11 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,6 +26,17 @@ public class MainActivity extends AppCompatActivity {
 
         linksViews();
         loadFontList();
+        addEvents();
+    }
+
+    private void addEvents() {
+        lvFonts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/" + adapter.getItem(i));
+                txtText.setTypeface(typeface);
+            }
+        });
     }
 
     private void linksViews() {
