@@ -2,8 +2,10 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,8 +37,22 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/" + adapter.getItem(i));
                 txtText.setTypeface(typeface);
+                playSound();
             }
         });
+    }
+
+    private void playSound() {
+        try {
+            AssetFileDescriptor descriptor = getAssets().openFd("musics/ting.mp3");
+            MediaPlayer player = new MediaPlayer();
+            player.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+            descriptor.close();
+            player.prepare();
+            player.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void linksViews() {
