@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lvProduct;
     ArrayAdapter<Product> adapter;
     ArrayList<Product> products;
-    SQLiteDatabase db;
+    public static SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         loadData();
 //        copyDBFromAsset();
         processCopyDB();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
     }
 
     @Override
