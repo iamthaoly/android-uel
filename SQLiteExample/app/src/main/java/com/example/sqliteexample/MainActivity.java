@@ -7,19 +7,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.Product;
+import com.example.model.Product;
+import com.example.utils.Constant;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.SQLData;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Product> products;
     public static SQLiteDatabase db;
 
+    Product selectedProduct = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +43,49 @@ public class MainActivity extends AppCompatActivity {
         linkViews();
         loadData();
 //        copyDBFromAsset();
+        addEvents();
         processCopyDB();
+
+        registerForContextMenu(lvProduct);
+    }
+
+    private void addEvents() {
+        lvProduct.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedProduct = adapter.getItem(i);
+                return false;
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Listview must reload after other activity add data.
         loadData();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.context_menu, menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.mnEdit) {
+            Intent intent = new Intent(MainActivity.this, EditProduct.class);
+            // Attach data
+            intent.putExtra(Constant.SELECTED_ITEM, selectedProduct);
+            startActivity(intent);
+        }
+        else if (item.getItemId() == R.id.mnDelete) {
+
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     @Override

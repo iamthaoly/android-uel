@@ -1,6 +1,8 @@
-package com.example;
+package com.example.model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private int productId;
     private String productName;
     private double productPrice;
