@@ -2,24 +2,71 @@ package com.example.sqliteexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.example.Product;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.SQLData;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static final String DB_NAME = "product_db.db";
     public static final String DB_PATH_SUFFIX = "/databases/";
+    ListView lvProduct;
+    ArrayAdapter<Product> adapter;
+    ArrayList<Product> products;
+    SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        copyDBFromAsset();
+        linkViews();
+        loadData();
+//        copyDBFromAsset();
         processCopyDB();
+    }
+
+    private void loadData() {
+        adapter = new ArrayAdapter<Product>(MainActivity.this, android.R.layout.simple_list_item_1, initData());
+        lvProduct.setAdapter(adapter);
+    }
+
+    private ArrayList<Product> initData() {
+        products = new ArrayList<>();
+//        products.add(new Product(1, "TIgurr", 19.22));
+//        products.add(new Product(1, "Big cat", 12));
+//        products.add(new Product(1, "Jungle king", 13));
+
+        db = openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product", null);
+        int id;
+        String name;
+        double price;
+        Product p;
+        while(cursor.moveToNext()) {
+            id = cursor.getInt(0);
+            name = cursor.getString(1);
+            price = cursor.getDouble(2);
+            p = new Product(id, name, price);
+            products.add(p);
+        }
+        cursor.close();
+        return products;
+    }
+
+    private void linkViews() {
+        lvProduct = findViewById(R.id.lvProduct);
     }
 
     private void processCopyDB() {
@@ -33,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
     private boolean copyDBFromAsset() {
         String dbPath = getApplicationInfo().dataDir + DB_PATH_SUFFIX + DB_NAME;
