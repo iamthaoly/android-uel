@@ -41,7 +41,7 @@ public class EditProduct extends AppCompatActivity {
               // Insert data
                 String name = edtName.getText().toString();
                 Double price = Double.parseDouble(edtPrice.getText().toString());
-                
+
             }
         });
 
