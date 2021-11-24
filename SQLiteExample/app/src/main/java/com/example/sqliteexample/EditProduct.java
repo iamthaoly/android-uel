@@ -17,6 +17,8 @@ public class EditProduct extends AppCompatActivity {
     EditText edtName, edtPrice;
     Button btnOK, btnCancel;
 
+    public static final String TABLE_NAME = "Product";
+
     Product p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,19 @@ public class EditProduct extends AppCompatActivity {
               // Insert data
                 String name = edtName.getText().toString();
                 Double price = Double.parseDouble(edtPrice.getText().toString());
+                ContentValues values = new ContentValues();
+                values.put("ProductName", name );
+                values.put("ProductPrice", price);
+                long flag = MainActivity.db.update(Constant.TABLE_NAME, values,"ProductId = ?",
+                        new String[]{String.valueOf(p.getProductId())});
+                if (flag > 0) {
+                    Toast.makeText(EditProduct.this, "Success!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(EditProduct.this, "Fail!", Toast.LENGTH_SHORT).show();
+                }
 
+                finish();
             }
         });
 

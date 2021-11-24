@@ -3,9 +3,12 @@ package com.example.sqliteexample;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.model.Product;
 import com.example.utils.Constant;
@@ -82,7 +86,38 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else if (item.getItemId() == R.id.mnDelete) {
+            if (selectedProduct != null) {
+                // Confirm before delete
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Confirm");
+                builder.setMessage("Are you want to delete this product?");
+                builder.setIcon(R.drawable.ic_launcher_background);
 
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int flag = db.delete("Product", "ProductId=?", new String[] {selectedProduct.getProductId() + ""});
+                        if (flag > 0) {
+                            Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                            loadData();
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.create().show();
+
+            }
         }
 
         return super.onContextItemSelected(item);
