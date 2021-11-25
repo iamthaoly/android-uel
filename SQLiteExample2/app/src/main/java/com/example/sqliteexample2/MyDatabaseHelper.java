@@ -59,6 +59,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void execSql(String sql) {
+        // Nho try catch. Hoac boolean tra ve ket qua exec co dc khong.
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(sql);
     }

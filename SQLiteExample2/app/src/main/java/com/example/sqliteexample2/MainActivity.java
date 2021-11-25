@@ -3,11 +3,16 @@ package com.example.sqliteexample2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.adapter.TaskAdapter;
 import com.example.model.Task;
@@ -67,8 +72,40 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.mnAddTask) {
             // Open dialog for adding task
-
+            openAddDialog();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openAddDialog() {
+        Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.add_dialog);
+        EditText edtName = dialog.findViewById(R.id.edtTaskName);
+        Button btnOk = dialog.findViewById(R.id.btnOk);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Insert data
+                String taskName = edtName.getText().toString();
+                if (taskName.equals("")) {
+                    Toast.makeText(MainActivity.this, "Please type your task name.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    db.execSql("INSERT INTO " + MyDatabaseHelper.TBL_NAME + " VALUES(null, '" + taskName + "')");
+                    Toast.makeText(MainActivity.this, "Insert successfully", Toast.LENGTH_SHORT).show();
+                    loadData();
+                    dialog.dismiss();
+                }
+            }
+        });
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }
