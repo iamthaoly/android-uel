@@ -1,9 +1,12 @@
 package com.example.sqliteexample2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.adapter.TaskAdapter;
@@ -52,5 +55,20 @@ public class MainActivity extends AppCompatActivity {
     private void prepareDB() {
         db = new MyDatabaseHelper(this);
         db.createSomeDefaultTask();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.mnAddTask) {
+            // Open dialog for adding task
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
