@@ -10,17 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.model.Task;
+import com.example.sqliteexample2.MainActivity;
 import com.example.sqliteexample2.R;
 
 import java.util.List;
 
 public class TaskAdapter extends BaseAdapter {
 
-    Context context;
+    MainActivity context;
     int item_layout;
     List<Task> tasks;
 
-    public TaskAdapter(Context context, int item_layout, List<Task> tasks) {
+    public TaskAdapter(MainActivity context, int item_layout, List<Task> tasks) {
         this.context = context;
         this.item_layout = item_layout;
         this.tasks = tasks;
@@ -64,14 +65,14 @@ public class TaskAdapter extends BaseAdapter {
         holder.imvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                context.openEditDialog(t);
             }
         });
 
         holder.imvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                context.deleteTask(t);
             }
         });
         return view;

@@ -3,7 +3,9 @@ package com.example.sqliteexample2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -107,5 +109,58 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    public void openEditDialog(Task t) {
+//        Toast.makeText(this, t.getTaskName(), Toast.LENGTH_SHORT).show();
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.edit_dialog);
+        EditText edtTaskName = dialog.findViewById(R.id.edtTaskName);
+        edtTaskName.setText(t.getTaskName());
+
+        Button btnOk = dialog.findViewById(R.id.btnOk);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String taskName = edtTaskName.getText().toString();
+                db.execSql("UPDATE " + MyDatabaseHelper.TBL_NAME + " SET " + MyDatabaseHelper.COL_TASK_NAME + " = '" + taskName + "' WHERE " + MyDatabaseHelper.COL_TASK_ID + " = " + t.getTaskId());
+
+                Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                loadData();
+
+                dialog.dismiss();
+            }
+        });
+
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void deleteTask(Task t) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm");
+        builder.setMessage("u sure to delete?");
+        builder.setPositiveButton("Yes!!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                db.execSql("DELETE FROM " + MyDatabaseHelper.TBL_NAME + " WHERE " + MyDatabaseHelper.COL_TASK_ID + " = " + t.getTaskId());
+                Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                loadData();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+
     }
 }
