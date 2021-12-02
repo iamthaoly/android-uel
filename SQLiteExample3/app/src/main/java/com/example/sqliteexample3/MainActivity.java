@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,9 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout sheetCamera, sheetGallery;
     boolean isCamera;
+    MyDatabase db = new MyDatabase(MainActivity.this);
 
     ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
@@ -80,6 +84,33 @@ public class MainActivity extends AppCompatActivity {
                 sheetDialog.show();
             }
         });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name, des;
+                name = edtName.getText().toString();
+                des = edtDes.getText().toString();
+
+                if (!name.equals("") && !des.equals("")) {
+                    boolean flag = db.insertData(name, des, convertPhoto());
+                    if (flag) {
+                        Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Fail!!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+    private byte[] convertPhoto() {
+        BitmapDrawable drawable = (BitmapDrawable) imvPhoto.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        return outputStream.toByteArray();
     }
 
     private void createSheetDialog() {
