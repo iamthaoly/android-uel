@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout sheetCamera, sheetGallery;
     boolean isCamera;
-    MyDatabase db = new MyDatabase(MainActivity.this);
+    public static MyDatabase db;
+//    public static MyDatabase db;
 
     ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         linkViews();
         createSheetDialog();
         addEvents();
+
+        db = new MyDatabase(this);
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -96,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     boolean flag = db.insertData(name, des, convertPhoto());
                     if (flag) {
                         Toast.makeText(MainActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                        startActivity(intent);
                     }
                     else {
                         Toast.makeText(MainActivity.this, "Fail!!", Toast.LENGTH_SHORT).show();
